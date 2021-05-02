@@ -1,0 +1,13 @@
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\bin\Debug\netcoreapp3.1\TestTask_Calc.exe
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\bin\Debug\netcoreapp3.1\TestTask_Calc.deps.json
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\bin\Debug\netcoreapp3.1\TestTask_Calc.runtimeconfig.json
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\bin\Debug\netcoreapp3.1\TestTask_Calc.runtimeconfig.dev.json
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\bin\Debug\netcoreapp3.1\TestTask_Calc.dll
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\bin\Debug\netcoreapp3.1\TestTask_Calc.pdb
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\obj\Debug\netcoreapp3.1\TestTask_Calc.csprojAssemblyReference.cache
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\obj\Debug\netcoreapp3.1\TestTask_Calc.AssemblyInfoInputs.cache
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\obj\Debug\netcoreapp3.1\TestTask_Calc.AssemblyInfo.cs
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\obj\Debug\netcoreapp3.1\TestTask_Calc.csproj.CoreCompileInputs.cache
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\obj\Debug\netcoreapp3.1\TestTask_Calc.dll
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\obj\Debug\netcoreapp3.1\TestTask_Calc.pdb
+C:\Users\TimSo\source\repos\TestTask_Calc\TestTask_Calc\obj\Debug\netcoreapp3.1\TestTask_Calc.genruntimeconfig.cache

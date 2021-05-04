@@ -3,62 +3,101 @@ using System.Text.RegularExpressions;
 
 namespace TestTask_Calc
 {
-    public static class ExtensionMethods
+    public static class Calc
     {
-        public static string Calc(this string value)
+        public static string Result(this string value)
         {
-            /* Method to calculate 2 digits and read what kind of operation is needed. */
-
-
+            /* Method to calculate and read what kind of operation is needed. */
+            Console.WriteLine(value);
             string pattern = "[-*+/]";
             value = value.Replace('.', ',');
-            Match act = Regex.Match(value, pattern); //Get operation
-            string action = String.Format("{0}", act); // Convert Match to String
+            MatchCollection options = Regex.Matches(value, pattern);
             string[] nums = Regex.Split(value, pattern); // Get numbers
-            double result;
-            double num1 = Convert.ToDouble(nums[0]);
-            double num2 = Convert.ToDouble(nums[1]);
-           
-            if (action == "+")
+            double total = Convert.ToDouble(nums[0]);
+            string action;
+
+            for (int i = 1; i < nums.Length; i++)
             {
-                result = num1 + num2;
-            }
-            else if (action == "-")
-            {
-                result = num1 - num2;
-            }
-            else if (action == "*")
-            {
-                result = num1 * num2;
-            }
-            else if (action == "/")
-            {
-                if (num2 != 0)
+                action = Convert.ToString(options[i - 1]);
+                if (action == "*")
                 {
-                    result = num1 / num2;
+                    total *= Convert.ToDouble(nums[i]);
+                }
+                else if (action == "/")
+                {
+                    if (nums[i] != "0")
+                    {
+                        total /= Convert.ToDouble(nums[i]);
+                    }
+                    else
+                    {
+                        return "ERROR: Cannot divide by 0";
+                    }
+                }
+                
+                else if (action == "-")
+                {
+                    total -= Convert.ToDouble(nums[i]);
+                }
+                else if (action == "+")
+                {
+                    total += Convert.ToDouble(nums[i]); ;
                 }
                 else
                 {
-                    return "ERROR: Cannot divide by 0" ;
+                    Console.WriteLine("ERROR in Calculation");
+                    return "ERROR";
                 }
             }
-            else
-            { 
-                Console.WriteLine("ERROR in Calculation");
-                return "ERROR";
-            }
+           
+            return total.ToString("0.00");
 
-            return Convert.ToString(result);
         }
-        public static bool IsValid(this string value)
+        public static string Calculate(this string value)
         {
-            string valid = @"^(\d+[.,]\d+|\d+)[-*+/](\d+[.,]\d+|\d+)";
-            Match match = Regex.Match(value, valid);
+            string validTwoNum = @"^(\d+[.,]\d+|\d+)[-*+/](\d+[.,]\d+|\d+)";
+            var matchTwoNum = Regex.Match(value, validTwoNum);
+            string complicatedExample = @"(?=.*\()(?=.*\)).*";
+            var matchComplicatedExample = Regex.Match(value, complicatedExample);
+            string number = @"(\d+[.,]\d+|\d+)$";
+            var matchNumber = Regex.Match(value, number);
 
-            if (string.IsNullOrWhiteSpace(value)) return false;
-            if (!match.Success) return false;
-      
-            return true;
+            if (string.IsNullOrWhiteSpace(value)) return "ERROR Empty";
+            if (matchComplicatedExample.Success) return value.Brakets();
+            if (matchTwoNum.Success) return value.Result();
+            if (matchNumber.Success) return value;
+
+            return "Wrong Example";
+        }
+        public static string Brakets(this string value)
+        {
+           while (value.Contains('(') && value.Contains(')'))
+            {
+                int indexOp = 0;
+                int indexCl = 0;
+                for(int i = 0; i <value.Length; i++)
+                {
+                    if (value[i] == '(')
+                    {
+                        indexOp = i;
+                    }
+                    else if (value[i] == ')')
+                    {
+                        indexCl = i;
+
+                        value = value.Remove(indexOp, indexCl - indexOp + 1).Insert(indexOp, BraketsSolution(indexOp, indexCl, value));
+                        Console.WriteLine(value);
+                        return value.Calculate();
+                    }
+                }
+            }
+            string result = "0";
+            return result;
+        }
+        public static string BraketsSolution(int startpoint, int endpoint, string example)
+        {
+            string ans = Result(example.Substring(startpoint + 1, endpoint - startpoint - 1));
+            return ans;
         }
     }
     class Program
@@ -73,18 +112,12 @@ namespace TestTask_Calc
                 Console.WriteLine("INPUT YOUR EXAMPLE:");
                 string value = Console.ReadLine();
 
-                if (value.IsValid())
-                {
-                    value = value.Calc();
-                }
-                else if( value.ToLower() == "exit")
+                if (value.ToLower() == "exit")
                 {
                     break;
                 }
-                else
-                {
-                    value = "Error";
-                }
+
+                value = value.Calculate();
 
                 Console.WriteLine($"\nResult is {value} \n");
             }

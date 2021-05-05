@@ -56,7 +56,7 @@ namespace TestTask_Calc
                 catch
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Example error, check your example");
+                    Console.WriteLine("Error, check your example");
                     Console.ForegroundColor = ConsoleColor.Gray;
                     return "None";
                 }
@@ -74,12 +74,15 @@ namespace TestTask_Calc
             string number = @"(\d+[.,]\d+|\d+)$";
             var matchNumber = Regex.Match(value, number);
 
-            if (string.IsNullOrWhiteSpace(value)) return "ERROR Empty";
+            if (string.IsNullOrWhiteSpace(value)) return "ERROR Empty string";
             if (matchComplicatedExample.Success) return value.Brakets();
             if (matchTwoNum.Success) return value.Result();
             if (matchNumber.Success) return value;
 
-            return "Wrong Example";
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Error");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            return "None";
         }
         public static string Brakets(this string value)
         {
@@ -121,28 +124,29 @@ namespace TestTask_Calc
             while (true)
             {
                 Console.WriteLine("INPUT YOUR EXAMPLE:\n");
-                //test
-                string[] value = {"5+5-(6+5", "(5+6)*3", "5+5-8*2/0.5", "5+", "5+5-"}; //"(5+6)*3", "5+5-8*2/0.5", "5.5+5.3", "36/2+(9*6)/5", "85/6-(5*5)+(3*7)"
-                for (int i = 0; i < value.Length; i++)
-                {
-      
-                    Console.WriteLine(value[i]);
-                    Console.WriteLine("Result is {0}\n",value[i].Calculate());
 
-                }
-                break;
-                /*string value = Console.ReadLine();
+                string value = Console.ReadLine();
 
                 if (value.ToLower() == "exit")
                 {
                     break;
                 }
 
-                value = value.Calculate();*/
-
+                value = value.Calculate();
                 Console.WriteLine($"\nResult is {value} \n");
+
+                // code below for input examples via array 
+                /*                string[] value = {"5+5-(6+5", "(5+6)*3", "5+5-8*2/0.5", "5+", "5+5-"}; // "(5+6)*3", "5+5-8*2/0.5", "5.5+5.3", "36/2+(9*6)/5", "85/6-(5*5)+(3*7)"
+                                for (int i = 0; i < value.Length; i++)
+                                {
+
+                                    Console.WriteLine(value[i]);
+                                    Console.WriteLine("Result is {0}\n",value[i].Calculate());
+
+                                }
+                                break;*/
             }
-           
+
         }
     }
 }

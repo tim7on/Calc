@@ -8,45 +8,57 @@ namespace TestTask_Calc
         public static string Result(this string value)
         {
             /* Method to calculate and read what kind of operation is needed. */
-            Console.WriteLine(value);
             string pattern = "[-*+/]";
             value = value.Replace('.', ',');
             MatchCollection options = Regex.Matches(value, pattern);
             string[] nums = Regex.Split(value, pattern); // Get numbers
             double total = Convert.ToDouble(nums[0]);
             string action;
-
             for (int i = 1; i < nums.Length; i++)
             {
-                action = Convert.ToString(options[i - 1]);
-                if (action == "*")
+                try
                 {
-                    total *= Convert.ToDouble(nums[i]);
-                }
-                else if (action == "/")
-                {
-                    if (nums[i] != "0")
+                    action = Convert.ToString(options[i - 1]);
+                    if (action == "*")
                     {
-                        total /= Convert.ToDouble(nums[i]);
+                        Console.WriteLine("{0} * {1} = {2}", total, Convert.ToDouble(nums[i]), total * Convert.ToDouble(nums[i]));
+                        total *= Convert.ToDouble(nums[i]);
+                    }
+                    else if (action == "/")
+                    {
+                        if (nums[i] != "0")
+                        {
+                            Console.WriteLine("{0} / {1} = {2}", total, Convert.ToDouble(nums[i]), total / Convert.ToDouble(nums[i]));
+                            total /= Convert.ToDouble(nums[i]);
+                        }
+                        else
+                        {
+                            return "ERROR: Cannot divide by 0";
+                        }
+                    }
+
+                    else if (action == "-")
+                    {
+                        Console.WriteLine("{0} - {1} = {2}", total, Convert.ToDouble(nums[i]), total - Convert.ToDouble(nums[i]));
+                        total -= Convert.ToDouble(nums[i]);
+                    }
+                    else if (action == "+")
+                    {
+                        Console.WriteLine("{0} + {1} = {2}", total, Convert.ToDouble(nums[i]), total + Convert.ToDouble(nums[i]));
+                        total += Convert.ToDouble(nums[i]); ;
                     }
                     else
                     {
-                        return "ERROR: Cannot divide by 0";
+                        
+                        Console.WriteLine("ERROR in Calculation");
                     }
                 }
-                
-                else if (action == "-")
+                catch
                 {
-                    total -= Convert.ToDouble(nums[i]);
-                }
-                else if (action == "+")
-                {
-                    total += Convert.ToDouble(nums[i]); ;
-                }
-                else
-                {
-                    Console.WriteLine("ERROR in Calculation");
-                    return "ERROR";
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Example error, check your example");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    return "None";
                 }
             }
            
@@ -86,7 +98,6 @@ namespace TestTask_Calc
                         indexCl = i;
 
                         value = value.Remove(indexOp, indexCl - indexOp + 1).Insert(indexOp, BraketsSolution(indexOp, indexCl, value));
-                        Console.WriteLine(value);
                         return value.Calculate();
                     }
                 }
@@ -109,15 +120,25 @@ namespace TestTask_Calc
                 "\n+ is to addition \n- is to substract \n* is to multiply \n/ is to divide");
             while (true)
             {
-                Console.WriteLine("INPUT YOUR EXAMPLE:");
-                string value = Console.ReadLine();
+                Console.WriteLine("INPUT YOUR EXAMPLE:\n");
+                //test
+                string[] value = {"5+5-(6+5", "(5+6)*3", "5+5-8*2/0.5", "5+", "5+5-"}; //"(5+6)*3", "5+5-8*2/0.5", "5.5+5.3", "36/2+(9*6)/5", "85/6-(5*5)+(3*7)"
+                for (int i = 0; i < value.Length; i++)
+                {
+      
+                    Console.WriteLine(value[i]);
+                    Console.WriteLine("Result is {0}\n",value[i].Calculate());
+
+                }
+                break;
+                /*string value = Console.ReadLine();
 
                 if (value.ToLower() == "exit")
                 {
                     break;
                 }
 
-                value = value.Calculate();
+                value = value.Calculate();*/
 
                 Console.WriteLine($"\nResult is {value} \n");
             }
